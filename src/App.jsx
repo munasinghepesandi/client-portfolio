@@ -123,7 +123,7 @@ function App() {
         <div className="absolute right-0 top-64 h-80 w-80 rounded-full bg-lime-500/10 blur-3xl" />
       </div>
 
-      <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-black/70 backdrop-blur-xl">
+      <header className="fixed left-0 right-0 top-0 z-30 border-b border-emerald-500/20 bg-black/70 backdrop-blur-xl">
         <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#home" className="text-lg font-semibold tracking-wide text-white">
             Malindu <span className="text-emerald-400">Ishan</span>
@@ -208,7 +208,7 @@ function App() {
         )}
       </header>
 
-      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pb-14 pt-10 sm:px-6 md:gap-16 md:pb-16 md:pt-20">
+      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pb-14 pt-28 sm:px-6 md:gap-16 md:pb-16 md:pt-32">
         <section
           id="home"
           className="grid gap-12 md:grid-cols-[1.15fr_0.85fr] md:items-center"
