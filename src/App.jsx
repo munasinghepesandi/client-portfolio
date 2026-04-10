@@ -65,6 +65,9 @@ const successStories = [
 function App() {
   const currentYear = new Date().getFullYear();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [contactStatus, setContactStatus] = useState({ type: 'idle', message: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const contactApiUrl = import.meta.env.VITE_CONTACT_API_URL || 'http://localhost:3001';
 
   useEffect(() => {
     const revealElements = document.querySelectorAll('[data-reveal]');
@@ -99,7 +102,7 @@ function App() {
 
   const closeMenu = () => setMenuOpen(false);
 
-  const handleContactSubmit = (event) => {
+  const handleContactSubmit = async (event) => {
     event.preventDefault();
 
     const formData = new FormData(event.currentTarget);
@@ -107,13 +110,38 @@ function App() {
     const email = formData.get('email');
     const message = formData.get('message');
 
-    const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
-    const body = encodeURIComponent(
-      `Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`,
-    );
+    try {
+      setIsSubmitting(true);
+      setContactStatus({ type: 'idle', message: '' });
 
-    window.location.href = `mailto:malindu.ishan.dev@gmail.com?subject=${subject}&body=${body}`;
-    event.currentTarget.reset();
+      const response = await fetch(`${contactApiUrl}/api/contact`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, email, message }),
+      });
+
+      const result = await response.json();
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Failed to send message.');
+      }
+
+      setContactStatus({
+        type: 'success',
+        message: result.message || 'Your message was sent successfully.',
+      });
+      alert(result.message || 'Message saved successfully.');
+      event.currentTarget.reset();
+    } catch (error) {
+      setContactStatus({
+        type: 'error',
+        message: error.message || 'Something went wrong. Please try again.',
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -377,7 +405,7 @@ function App() {
               </p>
               <p className="flex items-center gap-2 break-all">
                 <Globe size={16} className="text-emerald-300" />
-                <a href="https://github.com/malindu-ishan" target="_blank" rel="noopener noreferrer" className=" hover:text-emerald-200">
+                <a href="https://github.com/malinduishan" target="_blank" rel="noopener noreferrer" className=" hover:text-emerald-200">
                   GitHub Profile
                 </a>
               </p>
@@ -424,10 +452,19 @@ function App() {
             </label>
             <button
               type="submit"
-              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-300 sm:w-auto"
+              disabled={isSubmitting}
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-300 disabled:cursor-not-allowed disabled:bg-emerald-500/40 sm:w-auto"
             >
-              Send Message <ArrowRight size={16} />
+              {isSubmitting ? 'Sending...' : <><span>Send Message</span> <ArrowRight size={16} /></>}
             </button>
+            {contactStatus.type !== 'idle' && (
+              <p
+                aria-live="polite"
+                className={`text-sm ${contactStatus.type === 'success' ? 'text-emerald-300' : 'text-red-300'}`}
+              >
+                {contactStatus.message}
+              </p>
+            )}
           </form>
         </section>
       </main>
