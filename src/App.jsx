@@ -158,27 +158,52 @@ function App() {
         </nav>
 
         {menuOpen && (
-          <div className="border-t border-zinc-800/80 bg-black/95 px-4 py-4 md:hidden sm:px-6">
-            <ul className="space-y-2 text-sm text-zinc-200">
-              {navLinks.map((link) => (
-                <li key={link.href}>
-                  <a
-                    href={link.href}
+          <div
+            className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm md:hidden"
+            onClick={closeMenu}
+          >
+            <div className="flex min-h-screen items-start justify-center px-4 pt-24">
+              <div
+                className="w-full max-w-sm rounded-2xl border border-emerald-500/30 bg-[#0a0a0a] p-5 shadow-[0_0_80px_-35px_rgba(16,185,129,0.8)]"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="mb-4 flex items-center justify-between">
+                  <p className="text-sm font-semibold uppercase tracking-[0.18em] text-emerald-300">
+                    Navigation
+                  </p>
+                  <button
+                    type="button"
                     onClick={closeMenu}
-                    className="block rounded-lg px-3 py-2 transition hover:bg-emerald-500/10 hover:text-emerald-300"
+                    className="rounded-lg border border-zinc-700 p-2 text-zinc-300 transition hover:border-emerald-400/60 hover:text-emerald-300"
+                    aria-label="Close navigation menu"
                   >
-                    {link.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-            <a
-              href="#contact"
-              onClick={closeMenu}
-              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20"
-            >
-              Let&apos;s Talk <ArrowRight size={16} />
-            </a>
+                    <X size={16} />
+                  </button>
+                </div>
+
+                <ul className="space-y-2 text-sm text-zinc-200">
+                  {navLinks.map((link) => (
+                    <li key={link.href}>
+                      <a
+                        href={link.href}
+                        onClick={closeMenu}
+                        className="block rounded-lg px-3 py-2 transition hover:bg-emerald-500/10 hover:text-emerald-300"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+
+                <a
+                  href="#contact"
+                  onClick={closeMenu}
+                  className="mt-4 inline-flex w-full items-center justify-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20"
+                >
+                  Let&apos;s Talk <ArrowRight size={16} />
+                </a>
+              </div>
+            </div>
           </div>
         )}
       </header>
@@ -186,20 +211,27 @@ function App() {
       <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pb-14 pt-10 sm:px-6 md:gap-16 md:pb-16 md:pt-20">
         <section
           id="home"
-          className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center"
+          className="grid gap-12 md:grid-cols-[1.15fr_0.85fr] md:items-center"
         >
-          <div className="reveal" data-reveal>
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-[10px] uppercase tracking-[0.15em] text-emerald-300 sm:px-4 sm:text-xs sm:tracking-[0.2em]">
-              <GraduationCap size={14} /> Birmingham City University Graduate
+          <div className="reveal space-y-7" data-reveal>
+            <div className="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs font-medium uppercase tracking-[0.24em] text-emerald-300">
+              <Leaf size={14} /> Web & Software
+            </div>
+
+            <div className="space-y-4">
+              <h1 className="max-w-3xl text-4xl font-bold leading-[0.95] text-white sm:text-6xl md:text-7xl">
+                Malindu <span className="text-emerald-400">Ishan</span>
+              </h1>
+              <p className="max-w-2xl text-xl font-semibold text-zinc-200 sm:text-2xl md:text-3xl">
+                Full Stack Software Engineer
+              </p>
+            </div>
+
+            <p className="max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base md:text-lg">
+              I design and build polished digital products with a clean black-and-green aesthetic, strong user experience, and a focus on performance and clarity.
             </p>
-            <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
-              Turning ideas into
-              <span className="block text-emerald-400">Software Experiences</span>
-            </h1>
-            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base md:text-lg">
-              I&apos;m Malindu Ishan, a web developer and software engineer creating polished, performant, and business-ready digital products from Birmingham.
-            </p>
-            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+
+            <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="#projects"
                 className="rounded-full bg-emerald-400 px-5 py-3 text-center text-sm font-semibold text-black transition hover:bg-emerald-300 sm:text-left"
@@ -213,6 +245,8 @@ function App() {
                 Contact Me
               </a>
             </div>
+
+            
           </div>
 
           <div
@@ -220,12 +254,16 @@ function App() {
             data-reveal
             style={{ transitionDelay: '120ms' }}
           >
-            <div className="rounded-full border-4 border-emerald-400/60 p-2 shadow-[0_0_90px_-30px_rgba(16,185,129,0.9)]">
-              <img
-                src={heroPhoto}
-                alt="Malindu Ishan"
-                className="h-60 w-60 rounded-full object-cover object-center sm:h-72 sm:w-72"
-              />
+            <div className="relative">
+              <div className="absolute -inset-6 rounded-full bg-emerald-500/10 blur-3xl" />
+              <div className="group relative rounded-full border-4 border-emerald-400/60 p-2 shadow-[0_0_110px_-30px_rgba(16,185,129,1)] transition-all duration-500 ease-out hover:scale-105 hover:border-emerald-300 sm:hover:scale-110">
+                <img
+                  src={heroPhoto}
+                  alt="Malindu Ishan"
+                  className="h-60 w-60 rounded-full object-cover object-center transition-transform duration-500 ease-out group-hover:scale-110 sm:h-72 sm:w-72"
+                />
+              </div>
+              
             </div>
           </div>
         </section>
@@ -389,7 +427,7 @@ function App() {
 
       <footer className="border-t border-emerald-500/20 bg-black/70">
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-6 text-sm text-zinc-400 sm:px-6 md:flex-row md:items-center">
-          <p>© {currentYear} Malindu Ishan. All rights reserved.</p>
+          <p>© {currentYear} P&M Technologies. All rights reserved.</p>
           <p className="inline-flex items-center gap-2 text-zinc-500">
             Built with care and focus <Leaf size={14} className="text-emerald-400" />
           </p>
