@@ -1,4 +1,5 @@
 
+import { useState } from 'react';
 import {
   ArrowRight,
   Code2,
@@ -11,6 +12,8 @@ import {
   Phone,
   Sprout,
   Tractor,
+  Menu,
+  X,
 } from 'lucide-react';
 
 const skills = [
@@ -63,6 +66,16 @@ const digitalProjects = [
 
 function App() {
   const currentYear = new Date().getFullYear();
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const navLinks = [
+    { label: 'Skills', href: '#skills' },
+    { label: 'Farming', href: '#farming' },
+    { label: 'Projects', href: '#projects' },
+    { label: 'Contact', href: '#contact' },
+  ];
+
+  const closeMenu = () => setMenuOpen(false);
 
   const handleContactSubmit = (event) => {
     event.preventDefault();
@@ -89,48 +102,82 @@ function App() {
       </div>
 
       <header className="sticky top-0 z-30 border-b border-emerald-500/20 bg-black/70 backdrop-blur-xl">
-        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-4">
+        <nav className="mx-auto flex w-full max-w-6xl items-center justify-between px-4 py-4 sm:px-6">
           <a href="#home" className="text-lg font-semibold tracking-wide text-white">
             Malindu <span className="text-emerald-400">Ishan</span>
           </a>
           <ul className="hidden items-center gap-6 text-sm text-zinc-300 md:flex">
-            <li><a className="hover:text-emerald-400" href="#skills">Skills</a></li>
-            <li><a className="hover:text-emerald-400" href="#farming">Farming</a></li>
-            <li><a className="hover:text-emerald-400" href="#projects">Projects</a></li>
-            <li><a className="hover:text-emerald-400" href="#contact">Contact</a></li>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a className="hover:text-emerald-400" href={link.href}>{link.label}</a>
+              </li>
+            ))}
           </ul>
           <a
             href="#contact"
-            className="inline-flex items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20"
+            className="hidden items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20 sm:inline-flex"
           >
             Let&apos;s Talk <ArrowRight size={16} />
           </a>
+          <button
+            type="button"
+            aria-label="Toggle navigation menu"
+            aria-expanded={menuOpen}
+            className="inline-flex rounded-lg border border-zinc-700 p-2 text-zinc-200 transition hover:border-emerald-400/50 hover:text-emerald-300 md:hidden"
+            onClick={() => setMenuOpen((prev) => !prev)}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
         </nav>
+        {menuOpen && (
+          <div className="border-t border-zinc-800/80 bg-black/95 px-4 py-4 md:hidden sm:px-6">
+            <ul className="space-y-2 text-sm text-zinc-200">
+              {navLinks.map((link) => (
+                <li key={link.href}>
+                  <a
+                    href={link.href}
+                    onClick={closeMenu}
+                    className="block rounded-lg px-3 py-2 transition hover:bg-emerald-500/10 hover:text-emerald-300"
+                  >
+                    {link.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+            <a
+              href="#contact"
+              onClick={closeMenu}
+              className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20"
+            >
+              Let&apos;s Talk <ArrowRight size={16} />
+            </a>
+          </div>
+        )}
       </header>
 
-      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-16 px-6 pb-16 pt-12 md:pt-20">
+      <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pb-14 pt-10 sm:px-6 md:gap-16 md:pb-16 md:pt-20">
         <section id="home" className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
           <div>
-            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-emerald-300">
+            <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-[10px] uppercase tracking-[0.15em] text-emerald-300 sm:px-4 sm:text-xs sm:tracking-[0.2em]">
               <GraduationCap size={14} /> Birmingham City University Graduate
             </p>
-            <h1 className="text-4xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
+            <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
               Web Developer and
               <span className="block text-emerald-400">Software Engineer</span>
             </h1>
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-zinc-300 sm:text-lg">
+            <p className="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base md:text-lg">
               I&apos;m Malindu Ishan, building performant digital experiences while staying rooted in real-world farming. I combine technical precision with practical discipline to deliver work that is reliable, scalable, and meaningful.
             </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
                 href="#projects"
-                className="rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-300"
+                className="rounded-full bg-emerald-400 px-5 py-3 text-center text-sm font-semibold text-black transition hover:bg-emerald-300 sm:text-left"
               >
                 View Projects
               </a>
               <a
                 href="#contact"
-                className="rounded-full border border-zinc-700 px-5 py-3 text-sm font-semibold text-zinc-100 transition hover:border-emerald-400 hover:text-emerald-300"
+                className="rounded-full border border-zinc-700 px-5 py-3 text-center text-sm font-semibold text-zinc-100 transition hover:border-emerald-400 hover:text-emerald-300 sm:text-left"
               >
                 Contact Me
               </a>
@@ -194,7 +241,7 @@ function App() {
                 <p className="mt-2 text-sm leading-relaxed text-zinc-300">{project.summary}</p>
                 <button
                   type="button"
-                  className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-emerald-300 transition group-hover:text-emerald-200"
+                  className="mt-5 inline-flex items-center gap-2 text-left text-sm font-semibold text-emerald-300 transition group-hover:text-emerald-200"
                 >
                   Explore <ExternalLink size={15} />
                 </button>
@@ -210,9 +257,9 @@ function App() {
               Have a project idea, collaboration, or opportunity? Send a message and I&apos;ll get back to you soon.
             </p>
             <div className="mt-6 space-y-3 text-sm text-zinc-300">
-              <p className="flex items-center gap-2"><Mail size={16} className="text-emerald-300" /> malindu.ishan.dev@gmail.com</p>
+              <p className="flex items-center gap-2 break-all"><Mail size={16} className="text-emerald-300" /> malindu.ishan.dev@gmail.com</p>
               <p className="flex items-center gap-2"><Phone size={16} className="text-emerald-300" /> +44 0000 000000</p>
-              <p className="flex items-center gap-2"><Globe size={16} className="text-emerald-300" /> github.com/malindu-ishan</p>
+              <p className="flex items-center gap-2 break-all"><Globe size={16} className="text-emerald-300" /> github.com/malindu-ishan</p>
             </div>
           </div>
           <form onSubmit={handleContactSubmit} className="space-y-4">
@@ -248,7 +295,7 @@ function App() {
             </label>
             <button
               type="submit"
-              className="inline-flex items-center gap-2 rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-300"
+              className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-emerald-400 px-5 py-3 text-sm font-semibold text-black transition hover:bg-emerald-300 sm:w-auto"
             >
               Send Message <ArrowRight size={16} />
             </button>
@@ -257,7 +304,7 @@ function App() {
       </main>
 
       <footer className="border-t border-emerald-500/20 bg-black/70">
-        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-6 py-6 text-sm text-zinc-400 md:flex-row md:items-center">
+        <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-6 text-sm text-zinc-400 sm:px-6 md:flex-row md:items-center">
           <p>© {currentYear} Malindu Ishan. All rights reserved.</p>
           <p className="inline-flex items-center gap-2 text-zinc-500">
             Built with care from code to crop <Leaf size={14} className="text-emerald-400" />
