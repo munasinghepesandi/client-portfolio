@@ -1,46 +1,23 @@
-
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import heroPhoto from './assets/profile-m.png';
 import {
   ArrowRight,
+  Award,
   Code2,
   ExternalLink,
   Globe,
   GraduationCap,
   Leaf,
   Mail,
-  MapPin,
-  Phone,
-  Sprout,
-  Tractor,
   Menu,
+  Phone,
   X,
 } from 'lucide-react';
 
-const skills = [
-  'React & Vite',
-  'Node.js APIs',
-  'Tailwind CSS',
-  'MongoDB & SQL',
-  'UI/UX Prototyping',
-  'Performance Optimization',
-];
-
-const farmingWork = [
-  {
-    title: 'Nai Miris Cultivation',
-    details:
-      'Growing and maintaining high-quality pepper crops with seasonal planning, irrigation control, and soil management.',
-  },
-  {
-    title: 'Sustainable Farm Practices',
-    details:
-      'Applying low-waste and eco-conscious methods to improve yield consistency while preserving soil health.',
-  },
-  {
-    title: 'Farm-to-Market Workflow',
-    details:
-      'Managing harvesting timelines, quality checks, and delivery coordination for reliable market supply.',
-  },
+const introHighlights = [
+  'BSc background from Birmingham City University',
+  'Focused on modern frontend engineering and API integration',
+  'Strong execution from concept to deployment',
 ];
 
 const digitalProjects = [
@@ -64,14 +41,59 @@ const digitalProjects = [
   },
 ];
 
+const successStories = [
+  {
+    title: 'Portfolio Experience Revamp',
+    outcome:
+      'Improved visual credibility and mobile responsiveness for stronger first impressions.',
+    impact: 'Higher visitor engagement and clearer service communication.',
+  },
+  {
+    title: 'Project Delivery Consistency',
+    outcome:
+      'Introduced structured workflows and modular UI components for faster iterations.',
+    impact: 'Reduced rework and smoother client feedback cycles.',
+  },
+  {
+    title: 'Performance-First Build Approach',
+    outcome:
+      'Optimized assets and component structure for faster loading across devices.',
+    impact: 'Better UX on lower-bandwidth and mobile contexts.',
+  },
+];
+
 function App() {
   const currentYear = new Date().getFullYear();
   const [menuOpen, setMenuOpen] = useState(false);
 
+  useEffect(() => {
+    const revealElements = document.querySelectorAll('[data-reveal]');
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: '0px 0px -10% 0px',
+      },
+    );
+
+    revealElements.forEach((element) => observer.observe(element));
+
+    return () => observer.disconnect();
+  }, []);
+
   const navLinks = [
-    { label: 'Skills', href: '#skills' },
-    { label: 'Farming', href: '#farming' },
+    { label: 'Home', href: '#home' },
+    { label: 'Intro & Education', href: '#intro-education' },
     { label: 'Projects', href: '#projects' },
+    { label: 'Success Stories', href: '#success-stories' },
     { label: 'Contact', href: '#contact' },
   ];
 
@@ -106,19 +128,24 @@ function App() {
           <a href="#home" className="text-lg font-semibold tracking-wide text-white">
             Malindu <span className="text-emerald-400">Ishan</span>
           </a>
+
           <ul className="hidden items-center gap-6 text-sm text-zinc-300 md:flex">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a className="hover:text-emerald-400" href={link.href}>{link.label}</a>
+                <a className="hover:text-emerald-400" href={link.href}>
+                  {link.label}
+                </a>
               </li>
             ))}
           </ul>
+
           <a
             href="#contact"
             className="hidden items-center gap-2 rounded-full border border-emerald-400/40 bg-emerald-500/15 px-4 py-2 text-sm font-medium text-emerald-300 transition hover:border-emerald-300 hover:bg-emerald-400/20 sm:inline-flex"
           >
             Let&apos;s Talk <ArrowRight size={16} />
           </a>
+
           <button
             type="button"
             aria-label="Toggle navigation menu"
@@ -129,6 +156,7 @@ function App() {
             {menuOpen ? <X size={18} /> : <Menu size={18} />}
           </button>
         </nav>
+
         {menuOpen && (
           <div className="border-t border-zinc-800/80 bg-black/95 px-4 py-4 md:hidden sm:px-6">
             <ul className="space-y-2 text-sm text-zinc-200">
@@ -156,17 +184,20 @@ function App() {
       </header>
 
       <main className="relative mx-auto flex w-full max-w-6xl flex-col gap-12 px-4 pb-14 pt-10 sm:px-6 md:gap-16 md:pb-16 md:pt-20">
-        <section id="home" className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center">
-          <div>
+        <section
+          id="home"
+          className="grid gap-10 md:grid-cols-[1.2fr_0.8fr] md:items-center"
+        >
+          <div className="reveal" data-reveal>
             <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3 py-2 text-[10px] uppercase tracking-[0.15em] text-emerald-300 sm:px-4 sm:text-xs sm:tracking-[0.2em]">
               <GraduationCap size={14} /> Birmingham City University Graduate
             </p>
             <h1 className="text-3xl font-bold leading-tight text-white sm:text-5xl md:text-6xl">
-              Web Developer and
-              <span className="block text-emerald-400">Software Engineer</span>
+              Turning ideas into
+              <span className="block text-emerald-400">Software Experiences</span>
             </h1>
             <p className="mt-5 max-w-2xl text-sm leading-relaxed text-zinc-300 sm:text-base md:text-lg">
-              I&apos;m Malindu Ishan, building performant digital experiences while staying rooted in real-world farming. I combine technical precision with practical discipline to deliver work that is reliable, scalable, and meaningful.
+              I&apos;m Malindu Ishan, a web developer and software engineer creating polished, performant, and business-ready digital products from Birmingham.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <a
@@ -184,58 +215,73 @@ function App() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-emerald-500/20 bg-gradient-to-b from-emerald-500/10 to-zinc-900 p-6 shadow-[0_0_100px_-50px_rgba(16,185,129,0.6)]">
-            <h2 className="mb-5 text-lg font-semibold text-white">At A Glance</h2>
-            <div className="space-y-4 text-sm text-zinc-300">
-              <div className="flex items-start gap-3"><Code2 className="mt-0.5 text-emerald-400" size={18} /> Digital systems with clean architecture.</div>
-              <div className="flex items-start gap-3"><Leaf className="mt-0.5 text-emerald-400" size={18} /> Farming operations with sustainable focus.</div>
-              <div className="flex items-start gap-3"><MapPin className="mt-0.5 text-emerald-400" size={18} /> Based in Birmingham, available for remote work.</div>
+          <div
+            className="reveal flex items-center justify-center"
+            data-reveal
+            style={{ transitionDelay: '120ms' }}
+          >
+            <div className="rounded-full border-4 border-emerald-400/60 p-2 shadow-[0_0_90px_-30px_rgba(16,185,129,0.9)]">
+              <img
+                src={heroPhoto}
+                alt="Malindu Ishan"
+                className="h-60 w-60 rounded-full object-cover object-center sm:h-72 sm:w-72"
+              />
             </div>
           </div>
         </section>
 
-        <section id="skills" className="space-y-6">
+        <section id="intro-education" className="reveal space-y-6" data-reveal>
           <div className="flex items-center gap-3">
             <span className="h-6 w-1 rounded bg-emerald-400" />
-            <h2 className="text-2xl font-semibold text-white">Skills</h2>
+            <h2 className="text-2xl font-semibold text-white">Intro & Education</h2>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {skills.map((skill) => (
-              <article key={skill} className="rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 transition hover:-translate-y-1 hover:border-emerald-400/40">
-                <p className="font-medium text-zinc-100">{skill}</p>
-              </article>
-            ))}
+          <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
+            <article className="reveal rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6" data-reveal>
+              <h3 className="text-xl font-semibold text-white">Professional Intro</h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
+                I build modern, responsive websites and applications with a focus on smooth user journeys, maintainable code, and measurable business outcomes.
+              </p>
+              <ul className="mt-5 space-y-2 text-sm text-zinc-200">
+                {introHighlights.map((item) => (
+                  <li key={item} className="flex items-start gap-2">
+                    <span className="mt-1 h-2 w-2 rounded-full bg-emerald-400" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </article>
+            <article
+              className="reveal rounded-2xl border border-emerald-500/20 bg-black/60 p-6"
+              data-reveal
+              style={{ transitionDelay: '100ms' }}
+            >
+              <div className="mb-3 inline-flex rounded-full bg-emerald-500/15 p-2 text-emerald-300">
+                <GraduationCap size={18} />
+              </div>
+              <h3 className="text-xl font-semibold text-white">Education</h3>
+              <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
+                Birmingham City University graduate with strong foundations in software engineering principles, problem solving, and practical development workflows.
+              </p>
+              <p className="mt-3 text-sm text-emerald-300">Birmingham, United Kingdom</p>
+            </article>
           </div>
         </section>
 
-        <section id="farming" className="space-y-6">
+        <section id="projects" className="reveal space-y-6" data-reveal>
           <div className="flex items-center gap-3">
             <span className="h-6 w-1 rounded bg-emerald-400" />
-            <h2 className="text-2xl font-semibold text-white">Farming Work</h2>
-          </div>
-          <div className="grid gap-4 md:grid-cols-3">
-            {farmingWork.map((item) => (
-              <article key={item.title} className="rounded-2xl border border-emerald-500/20 bg-black/60 p-5">
-                <div className="mb-3 inline-flex rounded-full bg-emerald-500/15 p-2 text-emerald-300">
-                  <Tractor size={18} />
-                </div>
-                <h3 className="text-lg font-semibold text-white">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-zinc-300">{item.details}</p>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <section id="projects" className="space-y-6">
-          <div className="flex items-center gap-3">
-            <span className="h-6 w-1 rounded bg-emerald-400" />
-            <h2 className="text-2xl font-semibold text-white">Digital Projects</h2>
+            <h2 className="text-2xl font-semibold text-white">Projects</h2>
           </div>
           <div className="grid gap-5 md:grid-cols-3">
-            {digitalProjects.map((project) => (
-              <article key={project.title} className="group rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 transition hover:border-emerald-400/40">
+            {digitalProjects.map((project, index) => (
+              <article
+                key={project.title}
+                className="reveal group rounded-2xl border border-zinc-800 bg-zinc-900/60 p-5 transition hover:border-emerald-400/40"
+                data-reveal
+                style={{ transitionDelay: `${index * 90}ms` }}
+              >
                 <div className="mb-3 inline-flex items-center gap-2 text-xs uppercase tracking-widest text-emerald-300">
-                  <Sprout size={14} /> {project.stack}
+                  <Code2 size={14} /> {project.stack}
                 </div>
                 <h3 className="text-xl font-semibold text-white">{project.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-zinc-300">{project.summary}</p>
@@ -250,18 +296,56 @@ function App() {
           </div>
         </section>
 
-        <section id="contact" className="grid gap-6 rounded-3xl border border-emerald-500/20 bg-zinc-950/80 p-6 md:grid-cols-[0.85fr_1.15fr] md:p-8">
+        <section id="success-stories" className="reveal space-y-6" data-reveal>
+          <div className="flex items-center gap-3">
+            <span className="h-6 w-1 rounded bg-emerald-400" />
+            <h2 className="text-2xl font-semibold text-white">Success Stories</h2>
+          </div>
+          <div className="grid gap-4 md:grid-cols-3">
+            {successStories.map((story, index) => (
+              <article
+                key={story.title}
+                className="reveal rounded-2xl border border-emerald-500/20 bg-zinc-900/60 p-5"
+                data-reveal
+                style={{ transitionDelay: `${index * 80}ms` }}
+              >
+                <div className="mb-3 inline-flex rounded-full bg-emerald-500/15 p-2 text-emerald-300">
+                  <Award size={16} />
+                </div>
+                <h3 className="text-lg font-semibold text-white">{story.title}</h3>
+                <p className="mt-2 text-sm leading-relaxed text-zinc-300">{story.outcome}</p>
+                <p className="mt-3 text-sm font-medium text-emerald-300">{story.impact}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section
+          id="contact"
+          className="reveal grid gap-6 rounded-3xl border border-emerald-500/20 bg-zinc-950/80 p-6 md:grid-cols-[0.85fr_1.15fr] md:p-8"
+          data-reveal
+        >
           <div>
             <h2 className="text-2xl font-semibold text-white">Contact Box</h2>
             <p className="mt-3 text-sm leading-relaxed text-zinc-300">
               Have a project idea, collaboration, or opportunity? Send a message and I&apos;ll get back to you soon.
             </p>
             <div className="mt-6 space-y-3 text-sm text-zinc-300">
-              <p className="flex items-center gap-2 break-all"><Mail size={16} className="text-emerald-300" /> malindu.ishan.dev@gmail.com</p>
-              <p className="flex items-center gap-2"><Phone size={16} className="text-emerald-300" /> +44 0000 000000</p>
-              <p className="flex items-center gap-2 break-all"><Globe size={16} className="text-emerald-300" /> github.com/malindu-ishan</p>
+              <p className="flex items-center gap-2 break-all">
+                <Mail size={16} className="text-emerald-300" />
+                malindu.ishan.dev@gmail.com
+              </p>
+              <p className="flex items-center gap-2">
+                <Phone size={16} className="text-emerald-300" />
+                +44 0000 000000
+              </p>
+              <p className="flex items-center gap-2 break-all">
+                <Globe size={16} className="text-emerald-300" />
+                github.com/malindu-ishan
+              </p>
             </div>
           </div>
+
           <form onSubmit={handleContactSubmit} className="space-y-4">
             <label className="block">
               <span className="mb-1 block text-sm text-zinc-300">Your Name</span>
@@ -307,7 +391,7 @@ function App() {
         <div className="mx-auto flex w-full max-w-6xl flex-col items-start justify-between gap-3 px-4 py-6 text-sm text-zinc-400 sm:px-6 md:flex-row md:items-center">
           <p>© {currentYear} Malindu Ishan. All rights reserved.</p>
           <p className="inline-flex items-center gap-2 text-zinc-500">
-            Built with care from code to crop <Leaf size={14} className="text-emerald-400" />
+            Built with care and focus <Leaf size={14} className="text-emerald-400" />
           </p>
         </div>
       </footer>
