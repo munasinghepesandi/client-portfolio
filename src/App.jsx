@@ -371,16 +371,23 @@ function App() {
             <div className="mt-6 space-y-3 text-sm text-zinc-300">
               <p className="flex items-center gap-2 break-all">
                 <Mail size={16} className="text-emerald-300" />
-                malindu.ishan.dev@gmail.com
-              </p>
-              <p className="flex items-center gap-2">
-                <Phone size={16} className="text-emerald-300" />
-                +44 0000 000000
+                <a href="mailto:ma20lindu@gmail.com" className="hover:text-emerald-200">
+                  Email
+                </a>
               </p>
               <p className="flex items-center gap-2 break-all">
                 <Globe size={16} className="text-emerald-300" />
-                github.com/malindu-ishan
+                <a href="https://github.com/malindu-ishan" target="_blank" rel="noopener noreferrer" className=" hover:text-emerald-200">
+                  GitHub Profile
+                </a>
               </p>
+                <p className="flex items-center gap-2 break-all">
+                <Globe size={16} className="text-emerald-300" />
+                <a href="https://www.linkedin.com/in/malindu-ishan-30275123a?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-200">
+                  LinkedIn Profile
+                </a>
+              </p>
+              
             </div>
           </div>
 
