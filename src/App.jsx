@@ -15,9 +15,10 @@ import {
 } from 'lucide-react';
 
 const introHighlights = [
-  'BSc background from Birmingham City University',
   'Focused on modern frontend engineering and API integration',
   'Strong execution from concept to deployment',
+  'Passionate about clean design, performance, and user experience',
+  'Experience with React, Node.js, and full stack development',
 ];
 
 const digitalProjects = [
@@ -299,11 +300,11 @@ function App() {
         <section id="intro-education" className="reveal space-y-6" data-reveal>
           <div className="flex items-center gap-3">
             <span className="h-6 w-1 rounded bg-emerald-400" />
-            <h2 className="text-2xl font-semibold text-white">Intro & Education</h2>
+            <h2 className="text-2xl font-semibold text-white">What I Do</h2>
           </div>
           <div className="grid gap-5 lg:grid-cols-[1.1fr_0.9fr]">
             <article className="reveal rounded-2xl border border-zinc-800 bg-zinc-900/60 p-6" data-reveal>
-              <h3 className="text-xl font-semibold text-white">Professional Intro</h3>
+              
               <p className="mt-3 text-sm leading-relaxed text-zinc-300 sm:text-base">
                 I build modern, responsive websites and applications with a focus on smooth user journeys, maintainable code, and measurable business outcomes.
               </p>
@@ -365,7 +366,7 @@ function App() {
         <section id="success-stories" className="reveal space-y-6" data-reveal>
           <div className="flex items-center gap-3">
             <span className="h-6 w-1 rounded bg-emerald-400" />
-            <h2 className="text-2xl font-semibold text-white">Success Stories</h2>
+            <h2 className="text-2xl font-semibold text-white">Blog Series</h2>
           </div>
           <div className="grid gap-4 md:grid-cols-3">
             {successStories.map((story, index) => (
